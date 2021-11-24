@@ -8,7 +8,7 @@ export default function Login() {
 
     const emailRef = useRef()
     const passwordRef = useRef()
-    const { logIn, currentUser } = useAuth()
+    const { login, currentUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
@@ -19,9 +19,9 @@ export default function Login() {
         try {
             setError('') // reset error
             setLoading(true) // disable button to prevent multiple submission
-            await logIn(emailRef.current.value, passwordRef.current.value)
-            navigate.push('/')
-        } catch {
+            await login(emailRef.current.value, passwordRef.current.value)
+            navigate('/')
+        } catch (err) {
             setError('Failed to Log In')
         }
         setLoading(false)

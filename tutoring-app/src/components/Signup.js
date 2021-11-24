@@ -25,7 +25,7 @@ export default function Signup() {
             setError('') // reset error
             setLoading(true) // disable button to prevent multiple submission
             await signUp(emailRef.current.value, passwordRef.current.value)
-            navigate.push('/')
+            navigate('/')
         } catch {
             setError('Failed to create an account')
         }
