@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
+
 export default function Signup() {
 
     const emailRef = useRef()
@@ -10,6 +12,7 @@ export default function Signup() {
     const { signUp, currentUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     async function handleSubmit(e) {
         e.preventDefault() // prevent refreshing
@@ -21,7 +24,8 @@ export default function Signup() {
         try {
             setError('') // reset error
             setLoading(true) // disable button to prevent multiple submission
-            const _ = await signUp(emailRef.current.value, passwordRef.current.value)
+            await signUp(emailRef.current.value, passwordRef.current.value)
+            navigate.push('/')
         } catch {
             setError('Failed to create an account')
         }

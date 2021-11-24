@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
 
 export default function Login() {
 
@@ -10,6 +11,7 @@ export default function Login() {
     const { logIn, currentUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     async function handleSubmit(e) {
         e.preventDefault() // prevent refreshing
@@ -17,7 +19,8 @@ export default function Login() {
         try {
             setError('') // reset error
             setLoading(true) // disable button to prevent multiple submission
-            const _ = await logIn(emailRef.current.value, passwordRef.current.value)
+            await logIn(emailRef.current.value, passwordRef.current.value)
+            navigate.push('/')
         } catch {
             setError('Failed to Log In')
         }
