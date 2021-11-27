@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
+import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
+
 
 
 export default function Signup() {
@@ -14,12 +16,14 @@ export default function Signup() {
     const { signUp, currentUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const [tutoringSubjects, setTutoringSubjects] = useState([])
+    const [studentSubjects, setStudentSubjects] = useState([])
+
     const navigate = useNavigate()
     
     // TODO remove hard coded subjects
     const subjects = ['Calc III', 'Comp. Sci. I', 'Spanish', 'Discrete']
-    const tutoringSubjects = []
-    const studentSubjects = []
     
 
     async function handleSubmit(e) {
@@ -37,7 +41,7 @@ export default function Signup() {
         try {
             setError('') // reset error
             setLoading(true) // disable button to prevent multiple submission
-            await signUp(emailRef.current.value, passwordRef.current.value)
+            await signUp(emailRef.current.value, passwordRef.current.value, tutoringSubjects, studentSubjects)
             navigate('/')
         } catch {
             setError('Failed to create an account')
@@ -46,35 +50,16 @@ export default function Signup() {
     }
 
     // This could cause errors where the screen displays checked but the subj hasn't been added to the appropriate array
-    function handleChange(e) {
-        // Check if updating student or tutoring
-        let arr = []
-        
-        // Remove / Add subject
-        let subj = e.target.id
-
-        if(e.target.id.includes("student")){
-            subj = subj.replace('student-','')
-            arr = studentSubjects
-        } else {
-            subj = subj.replace('tutor-','')
-            arr = tutoringSubjects
-        }
-
-        if(e.target.checked){
-            arr.push(subj)
-        } else {
-            const index = arr.indexOf(subj)
-            arr.splice(index, 1)
-        }
-        console.log(tutoringSubjects)
-        console.log(studentSubjects)
+    function handleChangeTutor(e) {
+        setTutoringSubjects(e)
     }
-
+    function handleChangeStudent(e) {
+        setStudentSubjects(e)
+    }
     return (
         <>
             <Card>
-                <Card.Body>
+                <Card.Body >
                     <h2 className="text-center mb-4">Sign Up</h2>
                     {currentUser && currentUser.email}
                     {error && <Alert variant="danger">{error}</Alert>}
@@ -92,33 +77,21 @@ export default function Signup() {
                             <Form.Control type="password" ref={passwordConfirmRef} required />
                         </Form.Group>
 
-                        <Form.Group id="tutor">
+                        <Form.Group className="mb-2" id="tutor">
                             <Form.Label>Topics You Can Teach</Form.Label>
-                            {subjects.map((topic) => (
-                                <div key={`tutor-${topic}`} className="mb-1">
-                                <Form.Check 
-                                    inline
-                                    type='checkbox'
-                                    onChange={e => handleChange(e)}
-                                    id={`tutor-${topic}`}
-                                    label={`${topic}`}
-                                />
-                                </div>
-                            ))}
+                            <DropdownMultiselect
+                                options={subjects}
+                                handleOnChange={(e) => {handleChangeTutor(e)}}
+                                name="Subjects"
+                            />
                         </Form.Group>
-                        <Form.Group id="student">
+                        <Form.Group className="mb-1" id="student">
                             <Form.Label>Topics You Need Help</Form.Label>
-                            {subjects.map((topic) => (
-                                <div key={`student-${topic}`} className="mb-1">
-                                <Form.Check 
-                                    inline
-                                    type='checkbox'
-                                    onChange={e => handleChange(e)}
-                                    id={`student-${topic}`}
-                                    label={`${topic}`}
+                            <DropdownMultiselect
+                                options={subjects}
+                                handleOnChange={(e) => {handleChangeStudent(e)}}
+                                name="Subjects"
                                 />
-                                </div>
-                            ))}
                         </Form.Group>
                         <Button disabled={loading} className="mt-4 w-100" type="submit">
                             Sign Up
