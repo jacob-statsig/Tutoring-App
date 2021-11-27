@@ -79,18 +79,18 @@ export default function Signup() {
 
                         <Form.Group className="mb-2" id="tutor">
                             <Form.Label>Topics You Can Teach</Form.Label>
-                            <DropdownMultiselect
+                            <DropdownMultiselect id='tutor-dropdown'
                                 options={subjects}
                                 handleOnChange={(e) => {handleChangeTutor(e)}}
-                                name="Subjects"
+                                name="Tutoring-Subjects"
                             />
                         </Form.Group>
-                        <Form.Group className="mb-1" id="student">
+                        <Form.Group className="mb-2" id="student">
                             <Form.Label>Topics You Need Help</Form.Label>
-                            <DropdownMultiselect
+                            <DropdownMultiselect id='student-dropdown'
                                 options={subjects}
                                 handleOnChange={(e) => {handleChangeStudent(e)}}
-                                name="Subjects"
+                                name="Student-Subjects"
                                 />
                         </Form.Group>
                         <Button disabled={loading} className="mt-4 w-100" type="submit">
