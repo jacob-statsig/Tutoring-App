@@ -23,7 +23,7 @@ function App() {
                 <Route path='/' element={<Dashboard />} />
               </Route>
               <Route path='/' element={<PrivateRoute />}>
-                <Route path='/update-profile' element={<UpdateProfile />} />
+                <Route path='/update-profile' element={<UpdateProfile />} /> 
               </Route>
               <Route path='/signup' element={<Signup />}/>
               <Route path='/login' element={<Login />}/>

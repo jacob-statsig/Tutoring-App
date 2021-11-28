@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { auth } from '../firebase.js'
+import { auth, db } from '../firebase.js'
 
 const AuthContext = React.createContext()
 
@@ -13,8 +13,15 @@ export function AuthProvider({ children }) {
 
 
     // If we don't want to use fire base we just need to replace these two methods
-    function signUp(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password)
+    function signUp(email, password, tutoringSubjects, studentSubjects, firstName, lastName) {
+        return auth.createUserWithEmailAndPassword(email, password).then(cred => {
+            db.collection('users').doc(cred.user.uid).set({
+                tutoring_subjects: tutoringSubjects,
+                student_subjects: studentSubjects,
+                first_name: firstName,
+                last_name: lastName,
+            });
+        })
     }
 
     function login(email, password){
