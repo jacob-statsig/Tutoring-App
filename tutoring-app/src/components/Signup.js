@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
-import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
+import DropdownMultiselect from "react-multiselect-dropdown-bootstrap"
 
 
 
@@ -34,8 +34,11 @@ export default function Signup() {
         }
 
         // check if at least 2 subjects are selected from each
-        if(tutoringSubjects.length < 2 || studentSubjects < 2) {
-            return setError('Please select two subjects from both fields')
+        if(tutoringSubjects.length < 2) {
+            return setError('Please select two subjects to teach')
+        }
+        if(studentSubjects.length < 1) {
+            return setError('Please select one subject you need help')
         }
 
         try {
@@ -89,9 +92,18 @@ export default function Signup() {
                             <Form.Label>Topics You Need Help</Form.Label>
                             <DropdownMultiselect id='student-dropdown'
                                 options={subjects}
+                                disabled={tutoringSubjects.indexOf()}
                                 handleOnChange={(e) => {handleChangeStudent(e)}}
                                 name="Student-Subjects"
                                 />
+                        </Form.Group>
+                        <Form.Group className="mb-2" id="student">
+                            <Form.Label>Topics You Need Help</Form.Label>
+                            <select multiple className="selectpicker">
+                                <option>Mustard</option>
+                                <option>Ketchup</option>
+                                <option>Relish</option>
+                            </select>
                         </Form.Group>
                         <Button disabled={loading} className="mt-4 w-100" type="submit">
                             Sign Up
