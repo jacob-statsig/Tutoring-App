@@ -13,11 +13,13 @@ export function AuthProvider({ children }) {
 
 
     // If we don't want to use fire base we just need to replace these two methods
-    function signUp(email, password, tutoringSubjects, studentSubjects) {
+    function signUp(email, password, tutoringSubjects, studentSubjects, firstName, lastName) {
         return auth.createUserWithEmailAndPassword(email, password).then(cred => {
             db.collection('users').doc(cred.user.uid).set({
                 tutoring_subjects: tutoringSubjects,
-                student_subjects: studentSubjects
+                student_subjects: studentSubjects,
+                first_name: firstName,
+                last_name: lastName,
             });
         })
     }

@@ -13,6 +13,8 @@ export default function Signup() {
     const passwordConfirmRef = useRef()
     const tutorTopicRef = useRef()
     const studentTopicRef = useRef()
+    const firstNameRef = useRef()
+    const lastNameRef = useRef()
     const { signUp, currentUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -44,7 +46,9 @@ export default function Signup() {
         try {
             setError('') // reset error
             setLoading(true) // disable button to prevent multiple submission
-            await signUp(emailRef.current.value, passwordRef.current.value, tutoringSubjects, studentSubjects)
+            await signUp(emailRef.current.value, passwordRef.current.value, 
+                        tutoringSubjects, studentSubjects, 
+                        firstNameRef.current.value, lastNameRef.current.value)
             navigate('/')
         } catch {
             setError('Failed to create an account')
@@ -78,6 +82,15 @@ export default function Signup() {
                         <Form.Group id="password-confirm">
                             <Form.Label>Password Confirmation</Form.Label>
                             <Form.Control type="password" ref={passwordConfirmRef} required />
+                        </Form.Group>
+
+                        <Form.Group id="first-name">
+                            <Form.Label>First Name</Form.Label>
+                            <Form.Control type="text" ref={firstNameRef} required />
+                        </Form.Group>
+                        <Form.Group id="last-name">
+                            <Form.Label>Last Name</Form.Label>
+                            <Form.Control type="text" ref={lastNameRef} required />
                         </Form.Group>
 
                         <Form.Group className="mb-2" id="tutor">
