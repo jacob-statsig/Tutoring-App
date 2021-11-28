@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
+import { auth, db } from '../firebase.js'
 
 export default function Dashboard() {
     const [error, setError] = useState('')
@@ -27,6 +28,9 @@ export default function Dashboard() {
                     <h2 className="text-center mb-4">Profile</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <strong>Email:</strong> {currentUser.email}
+
+                    {currentUser.uid}
+
                     <Link to="/update-profile" className="btn btn-primary w-100">Update Profile</Link>
                 </Card.Body>
             </Card>
