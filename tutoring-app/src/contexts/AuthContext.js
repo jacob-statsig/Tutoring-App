@@ -20,6 +20,7 @@ export function AuthProvider({ children }) {
                 student_subjects: studentSubjects,
                 first_name: firstName,
                 last_name: lastName,
+                uid: cred.user.uid,
             });
         })
     }
