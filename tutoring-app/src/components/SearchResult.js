@@ -5,7 +5,7 @@ import WebFont from 'webfontloader';
 export default function SearchResult(props) {
 
     const { firstName, lastName, subjects, major, classOf } = props
-
+    
     useEffect(() => {
         WebFont.load({
             google: {
@@ -13,7 +13,6 @@ export default function SearchResult(props) {
             }
         });
     }, []);
-      
 
      const searchResult = {
         alignItems: 'flexStart',
@@ -117,7 +116,6 @@ export default function SearchResult(props) {
                             </div>
                         ))}
                     </div>
-                    
                 </div>
             </div>
         </div>

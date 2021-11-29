@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Card, Alert } from 'react-bootstrap'
+import { Button, Card, Alert, Form } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { auth, db } from '../firebase.js'
@@ -10,15 +10,24 @@ export default function Dashboard() {
     const { logout, currentUser } = useAuth()
 
     const [tutors, setTutors] = useState([])
+    const [subjectQuery, setSubjectQuery] = useState(null)
     const [loading, setLoading] = useState(false)
+
 
     const ref = db.collection('users')
     console.log(ref)
+    
+    // TODO remove hard coded subjects
+    const subjects = ['Calc III', 'Comp. Sci. I', 'Spanish', 'Discrete']
 
     // get tutors when page first loads
     useEffect(() => {
         getTutors();
     }, [])
+
+    useEffect(() => {
+        getTutors()
+    }, [subjectQuery])
 
     function getTutors(){
         setLoading(true);
@@ -27,7 +36,11 @@ export default function Dashboard() {
             const items = [];
             // extract each document in folder
             querySnapshot.forEach((doc) => {
-                items.push(doc.data());
+                // check if this is a user in the user folder before adding
+                // and the user is offering the correct subject
+                if(doc.data().uid && 
+                    (doc.data().tutoring_subjects && doc.data().tutoring_subjects.indexOf(subjectQuery) > -1))
+                    items.push(doc.data());
             })
             setTutors(items);
             setLoading(false);
@@ -47,28 +60,57 @@ export default function Dashboard() {
             setError('Failed to Log Out')
         }
     }
+
+    function handleSubjectChange(e){
+        setSubjectQuery(e.target.value);
+        console.log("Subject Query = " + subjectQuery)
+    }
+
     // TEMP: show if page is being updated
     if(loading){
         return <h1>Loading...</h1>
     }
 
-    return (
-        <>
-            <div>
-                <h1>Tutors</h1>
-                {console.log(tutors)}
+    function GetSearchResults() {
+        if(subjectQuery == null){
+            return <h4>Please Select a Subject</h4> 
+        }
+        if(tutors.length == 0){
+            return <h4>No tutors for this subject</h4>
+        }
+        return ( 
+            <>        
+               <h2>Fitting Tutors</h2>
                 {tutors.map((tutor) => (
-
-                    
-
                     <div key={tutor.uid}>
                         <SearchResult 
-                        firstName={tutor.first_name}
-                        lastName={tutor.last_name}
-                        subjects={tutor.tutoring_subjects}
+                            firstName={tutor.first_name}
+                            lastName={tutor.last_name}
+                            subjects={tutor.tutoring_subjects}
                         />
                     </div>
                 ))}
+            </>
+        )
+    }
+
+    return (
+        <>
+            <div>
+                <h1>Find Tutors</h1>
+                <Form>
+                    <Form.Select onChange={(e) => handleSubjectChange(e)}>
+                       <option value={null}>
+                            Select A Subject
+                        </option>
+                        {subjects.map((subject) => (
+                            <option value={subject} selected={subject === subjectQuery}>
+                                {subject}
+                            </option>
+                        ))}
+                    </Form.Select>
+                </Form>
+                <GetSearchResults />
             </div>
 
             <Card>
