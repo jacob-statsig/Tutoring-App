@@ -9,7 +9,8 @@ import Login from "./components/Login";
 import Signup from './components/Signup';
 import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
-import UpdateProfile from './components/UpdateProfile'
+import UpdateProfile from './components/UpdateProfile';
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
             <Routes>
               <Route path='/' element={<PrivateRoute />}>
                 <Route path='/' element={<Dashboard />} />
+              </Route>
+              <Route path='/' element={<PrivateRoute />}>
+                <Route path='/profile' element={<Profile />} />
               </Route>
               <Route path='/' element={<PrivateRoute />}>
                 <Route path='/update-profile' element={<UpdateProfile />} /> 
