@@ -1,5 +1,5 @@
 import React, {useRef} from 'react'
-import {database} from '../firebase'
+import {db} from '../firebase'
 import firebase from 'firebase'
 import { Form, Button} from 'react-bootstrap'
 
@@ -11,7 +11,7 @@ export default function SendMessage(){
 
         //todo get info from current user
 
-        await database.collection('user').doc('testSend').collection('Inbox').add({
+        await db.collection('user').doc('testSend').collection('Inbox').add({
             text: msg.current.value,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         })
