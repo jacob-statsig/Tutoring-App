@@ -5,14 +5,6 @@ import WebFont from 'webfontloader';
 export default function SearchResult(props) {
 
     const { firstName, lastName, subjects, major, classOf } = props
-    
-    useEffect(() => {
-        WebFont.load({
-            google: {
-                families: ['poppins']
-            }
-        });
-    }, []);
 
      const searchResult = {
         alignItems: 'flexStart',
