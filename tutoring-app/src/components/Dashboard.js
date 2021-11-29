@@ -102,6 +102,9 @@ export default function Dashboard() {
             <div className="w-100 text-center mt-2">
                 <Button variant="link" onClick={() => navigate('/profile')}>Go To Profile</Button>
             </div>
+            <div className="w-100 text-center mt-2">
+                <Button variant="link" onClick={() => navigate('/communication')}>Go To Communications Page</Button>
+            </div>
         </>
     )
 }

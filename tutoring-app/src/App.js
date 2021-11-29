@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import UpdateProfile from './components/UpdateProfile';
 import Profile from "./components/Profile";
+import Communication from "./components/Communication";
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
               </Route>
               <Route path='/' element={<PrivateRoute />}>
                 <Route path='/profile' element={<Profile />} />
+              </Route>
+              <Route path='/' element={<PrivateRoute />}>
+                <Route path='/communication' element={<Communication />} />
               </Route>
               <Route path='/' element={<PrivateRoute />}>
                 <Route path='/update-profile' element={<UpdateProfile />} />

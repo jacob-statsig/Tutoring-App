@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import WebFont from 'webfontloader';
 
 
 export default function SearchResult(props) {
@@ -10,7 +9,6 @@ export default function SearchResult(props) {
         alignItems: 'flexStart',
         display: 'flex',
         marginBottom: '8px',
-
       }
       
       const overlapGroup = {
