@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {database} from '../firebase.js'
+import sendMessage from './sendMessage.js'
 
 export default function Communication(){
     const [messages, setMessages] = useState([])
@@ -16,6 +17,7 @@ export default function Communication(){
                     <p> {text} </p>
                 </div>
             ))}
+            <sendMessage />
         </div>
     )
 }
