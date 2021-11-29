@@ -9,13 +9,8 @@ import Login from "./components/Login";
 import Signup from './components/Signup';
 import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
-<<<<<<< HEAD
 import UpdateProfile from './components/UpdateProfile';
 import Profile from "./components/Profile";
-=======
-import UpdateProfile from './components/UpdateProfile'
-import Communication from "./components/Communication";
->>>>>>> parent of f234a81e (Merge branch 'main' of https://github.com/jacob-oquinn/Tutoring-App into main)
 
 function App() {
   return (
