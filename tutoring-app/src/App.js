@@ -11,7 +11,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import UpdateProfile from './components/UpdateProfile';
 import Profile from "./components/Profile";
-import Communication from "./components/Communication";
 
 function App() {
   return (
@@ -28,12 +27,11 @@ function App() {
                 <Route path='/profile' element={<Profile />} />
               </Route>
               <Route path='/' element={<PrivateRoute />}>
-                <Route path='/update-profile' element={<UpdateProfile />} /> 
+                <Route path='/update-profile' element={<UpdateProfile />} />
               </Route>
               <Route path='/signup' element={<Signup />}/>
               <Route path='/login' element={<Login />}/>
               <Route path='/forgot-password' element={<ForgotPassword />}/>
-              <Route path='/Communication' element={<Communication />}/>
             </Routes>
           </AuthProvider> 
         </Router>

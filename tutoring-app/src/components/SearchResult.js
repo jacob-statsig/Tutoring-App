@@ -113,4 +113,3 @@ export default function SearchResult(props) {
         </div>
     )
 }
-
