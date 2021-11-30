@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Alert, Button } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
 import { db, auth } from '../firebase.js'
 import { useAuth } from '../contexts/AuthContext'
 import firebase from 'firebase'
 import './Communication.css';
+import './NavigationItems.css';
 
 export default function Communication(){
     const [receivedMessages, setReceivedMessages] = useState([])
@@ -67,10 +69,9 @@ export default function Communication(){
         return (
             <>
                 {sentMessages.map( ({Text, id, Receiver, Sender}) => (
-                    <div key = {id}>
-                        <p> Sender: {Sender}</p>
-                        <p> Reciever: {Receiver}</p>
-                        <p> {Text} </p>
+                    <div className="message sent" key = {id}>
+                        <p> Sent To: {Receiver} <br />
+                         {Text}</p>
                     </div>
                 ))}
             </>
@@ -81,10 +82,9 @@ export default function Communication(){
         return(
             <>
                 {receivedMessages.map( ({Text, id, Receiver, Sender}) => (
-                    <div className="message" key = {id}>
-                        <p> Sender: {Sender}</p>
-                        <p> Reciever: {Receiver}</p>
-                        <p> {Text} </p>
+                    <div className="message received" key = {id}>
+                        <p> From: {Sender} <br />
+                         {Text}</p>
                     </div>
                 ))}
             </>
@@ -100,6 +100,7 @@ export default function Communication(){
     }
     
     return(
+    
         <div>
 
             <Button onClick={toggleView}>{lookingAtRecieved ? "Switch to Sent Messages" : "Switch to Recieved Messages"}</Button>
@@ -113,8 +114,11 @@ export default function Communication(){
                 <Button type="submit" disabled={!formMessage && !formRecipient}>🕊️</Button>
             </Form>
 
-
+            <div>
+                <Link to='/' className='goBackLink'>Go To Dashboard</Link>
+            </div>
         </div>
+        
     )
 }
 

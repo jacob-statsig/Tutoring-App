@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
-
+import './NavigationItems.css';
 
 export default function Signup() {
 
@@ -67,8 +67,8 @@ export default function Signup() {
                     </Form>
                 </Card.Body>
             </Card>
-            <div className="w-100 text-center mt-2">
-                <Link to='/'>Cancel</Link>
+            <div>
+                <Link to='/' className='goBackLink'>Cancel</Link>
             </div>
         </>
     )

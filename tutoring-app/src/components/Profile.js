@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { auth, db } from '../firebase.js'
 import SearchResult from './SearchResult'
 
+import './NavigationItems.css';
 
 export default function Profile() {
     
@@ -65,8 +66,8 @@ export default function Profile() {
     if(profile != null) {
         return (
             <div>
-                <div className="w-100 text-center mt-2">
-                    <Button variant="link" onClick={() => navigate('..')}>Go To Dashboard</Button>
+                <div>
+                    <Button variant="button" className='generalButtonOption' onClick={() => navigate('..')}>Go To Dashboard</Button>
                 </div>
                 <Card>
                     <Card.Body>
@@ -75,13 +76,14 @@ export default function Profile() {
                         <DisplayData title="Email" info={currentUser.email} />
                         <DisplayData title="First Name" info={profile.first_name} />
                         <DisplayData title="Last Name" info={profile.last_name} />
+                        <DisplayData title="Points" info={profile.Points} />
 
                         <Link to="/update-profile" className="btn btn-primary w-100">Update Profile</Link>
                     </Card.Body>
                 </Card>
                 
-                <div className="w-100 text-center mt-2">
-                    <Button variant="link" onClick={handleLogout}>Log Out</Button>
+                <div className="goBackLink">
+                    <Button variant="button" onClick={handleLogout}>Log Out</Button>
                 </div>
             </div>
         )

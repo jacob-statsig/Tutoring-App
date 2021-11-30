@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 export default function SearchResult(props) {
 
-    const { firstName, lastName, subjects, major, classOf } = props
+    const { firstName, lastName, subjects, major, classOf , email, points} = props
 
      const searchResult = {
         alignItems: 'flexStart',
@@ -17,7 +17,7 @@ export default function SearchResult(props) {
         borderRadius: '26px',
         display: 'flex',
         height: '169px',
-        minWidth: '1125px',
+        minWidth: '100%',
         padding: '26px 23px',
       }
       
@@ -52,7 +52,7 @@ export default function SearchResult(props) {
         letterSpacing: '0',
         marginTop: '13px',
         minHeight: '28px',
-        width: '225px',
+        width: '325px',
         fontSize: '18px',
         fontFamily: 'poppins',
       }
@@ -81,6 +81,43 @@ export default function SearchResult(props) {
         fontFamily: 'poppins',
       }
 
+
+      function DisplayEmail(){
+        if(email == null) 
+          return null;
+        return (
+          <div style={majorStyle}>
+            {"Email: " + email}
+          </div>
+        )
+      }
+      function DisplayMajor(){
+        if(major == null) 
+          return null;
+        return (
+          <div style={majorStyle}>
+            {"Major: " + major}
+          </div>
+        )
+      }
+      function DisplaClassOf(){
+        if(classOf == null) 
+          return null;
+        return (
+          <div style={graduation}>
+            {"Class Of: " + classOf}
+          </div>
+        )
+      }
+      function DisplayPoints(){
+        if(points == null) 
+          return null;
+        return (
+          <div style={graduation}>
+            {"Points: " + points}
+          </div>
+        )
+      }
     return (
         <div style={searchResult}>
             <div style={overlapGroup}>
@@ -88,12 +125,11 @@ export default function SearchResult(props) {
                     <h1 style={name}>
                         {firstName + " " + lastName}
                     </h1>
-                    <div style={majorStyle}>
-                        {major ? major : ""}
-                    </div>
-                    <div style={graduation}>
-                        {classOf ? classOf : ""}
-                    </div>
+                    <DisplayMajor />
+                    <DisplaClassOf />
+                    <DisplayPoints />
+                    <DisplayEmail />
+                    
                 </div>
                 <div style={flexCol1}>
                     <div style={offering}>
@@ -101,7 +137,7 @@ export default function SearchResult(props) {
                     </div>
                     <div style={topics}>
                         {subjects.map((subject) => (
-                            <div>
+                            <div key={subject}>
                                 {subject}
                             </div>
                         ))}

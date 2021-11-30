@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { auth, db } from '../firebase.js'
 import SearchResult from './SearchResult'
 
+import './NavigationItems.css';
+
 export default function Dashboard() {
     const [error, setError] = useState('')
     const { logout, currentUser } = useAuth()
@@ -12,13 +14,29 @@ export default function Dashboard() {
     const [tutors, setTutors] = useState([])
     const [subjectQuery, setSubjectQuery] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [subjects, setSubjects] = useState([])
 
     const navigate = useNavigate()
     const ref = db.collection('users')
-    console.log(ref)
     
-    // TODO remove hard coded subjects
-    const subjects = ['Calc III', 'Comp. Sci. I', 'Spanish', 'Discrete']
+
+    const subjectsRef = db.collection('Subjects')
+
+    useEffect(() => {
+        getSubjects()
+    }, [])
+
+    function getSubjects(){
+        setLoading(true)
+        subjectsRef.onSnapshot((querySnapshot) =>{
+            const items = [];
+            querySnapshot.forEach((doc) => {
+                items.push(doc.id)
+            })
+            setSubjects(items);
+            setLoading(false)
+        })
+    }
 
     // get tutors when page first loads
     useEffect(() => {
@@ -65,6 +83,7 @@ export default function Dashboard() {
         if(tutors.length == 0){
             return <h4>No tutors for this subject</h4>
         }
+        
         return ( 
             <>        
                <h2>Fitting Tutors</h2>
@@ -74,6 +93,7 @@ export default function Dashboard() {
                             firstName={tutor.first_name}
                             lastName={tutor.last_name}
                             subjects={tutor.tutoring_subjects}
+                            email={tutor.email}
                         />
                     </div>
                 ))}
@@ -83,15 +103,15 @@ export default function Dashboard() {
 
     return (
         <>
-            <div>
+            <div className='centerConsole'>
                 <h1>Find Tutors</h1>
                 <Form>
                     <Form.Select onChange={(e) => handleSubjectChange(e)}>
                        <option value={null}>
-                            Select A Subject
+                            Select a Subject
                         </option>
                         {subjects.map((subject) => (
-                            <option value={subject} selected={subject === subjectQuery}>
+                            <option key={subject} value={subject} selected={subject === subjectQuery}>
                                 {subject}
                             </option>
                         ))}
@@ -99,11 +119,17 @@ export default function Dashboard() {
                 </Form>
                 <GetSearchResults />
             </div>
-            <div className="w-100 text-center mt-2">
-                <Button variant="link" onClick={() => navigate('/profile')}>Go To Profile</Button>
+            <div>
+                <Button variant="button" className='generalButtonOption' onClick={() => navigate('/profile')}> Go To Profile</Button>
             </div>
-            <div className="w-100 text-center mt-2">
-                <Button variant="link" onClick={() => navigate('/communication')}>Go To Communications Page</Button>
+            <div>
+                <Button variant="button" className='generalButtonOption' onClick={() => navigate('/communication')}>Go To Communications Page</Button>
+            </div>
+            <div>
+                <Button variant="button" className='generalButtonOption' onClick={() => navigate('/points')}>Go To Points Page</Button>
+            </div>
+            <div>
+                <Button variant="button" className='generalButtonOption' onClick={() => navigate('/help')}>Go To Help Page</Button>
             </div>
         </>
     )

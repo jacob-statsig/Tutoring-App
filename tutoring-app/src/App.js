@@ -12,11 +12,13 @@ import ForgotPassword from "./components/ForgotPassword";
 import UpdateProfile from './components/UpdateProfile';
 import Profile from "./components/Profile";
 import Communication from "./components/Communication";
+import Points from "./components/Points";
+import HelpPage from "./components/HelpPage";
 
 function App() {
   return (
     
-      <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+      <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh"}}>
       
         <Router className="w-100" style={{ maxWidth: "400px" }}>
           <AuthProvider>
@@ -29,6 +31,12 @@ function App() {
               </Route>
               <Route path='/' element={<PrivateRoute />}>
                 <Route path='/communication' element={<Communication />} />
+              </Route>
+              <Route path='/' element={<PrivateRoute />}>
+                <Route path='/points' element={<Points />} />
+              </Route>
+              <Route path='/' element={<PrivateRoute />}>
+                <Route path='/help' element={<HelpPage />} />
               </Route>
               <Route path='/' element={<PrivateRoute />}>
                 <Route path='/update-profile' element={<UpdateProfile />} />
